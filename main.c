@@ -26,9 +26,9 @@ int main(int argc, char** argv) {
     return (EXIT_SUCCESS);
 }
 
-ISR(TCA0_OVF_vect)
-{
-    DAC0.DATAH += temp++;
+ISR(TCA0_OVF_vect){
+    
+    DAC0.DATAH = temp++;
     TCA0.SINGLE.INTFLAGS |= 1;
     return;
 }
