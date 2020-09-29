@@ -9,27 +9,30 @@
 void intialize() {
     //opamp intialization
     //setting timebase
-    //1u/(1/24Mhz) = 24
-    OPAMP.TIMEBASE |= 24;
+    //1u/(1/4Mhz) = 
+    //OPAMP.TIMEBASE |= 4;
     //set opamp to unity gain and input to unity gain to be the DAC
-    OPAMP.OP0INMUX |= OPAMP_MUXNEG_OUT_gc | OPAMP_MUXPOS_DAC_gc;
+    //OPAMP.OP0INMUX |= OPAMP_MUXNEG_OUT_gc | OPAMP_MUXPOS_DAC_gc;
     //set opamp in always on and sets output driver to normal
-    OPAMP.OP0CTRLA |= OPAMP_OUTMODE_NORMAL_gc;
+    //OPAMP.OP0CTRLA |= OPAMP_OUTMODE_NORMAL_gc;
     //enables OPAMP
-    OPAMP.CTRLA |= 1;
+    //OPAMP.CTRLA |= 1;
     //do we need settle timer? who knows documentation
     //just says depends on multitude of factors. can be added
     //later if device doesn't have proper functionality
     //see page 533 of the documentation for more info
+    //pd2
     
     //dac0 intialization
     //sets up VREF to VDD and turns on AlwaysOn
-    VREF.DAC0REF |=  0x85; 
+    VREF.DAC0REF |=  0x05; 
     //sets intial value
-    DAC0.DATA = 0;
+    DAC0.DATAH = 50;
     //enables dac
-    DAC0.CTRLA |= 0x1; 
+    PORTD.PIN6CTRL |= 0x4;
+    DAC0.CTRLA |= 0xC1; 
    
+    
     
     //clock init
     //1/4Mhz*top=(1/8000)
