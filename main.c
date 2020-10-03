@@ -13,7 +13,7 @@
 /*
  * 
  */
-int temp = 0;
+char temp = 0;
 
 
 int main(int argc, char** argv) {

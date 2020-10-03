@@ -9,14 +9,16 @@
 void intialize() {
     //opamp intialization
     //setting timebase
-    //1u/(1/4Mhz) = 
-    //OPAMP.TIMEBASE |= 4;
+    //1u/(1/4Mhz) - 1 = 
+    OPAMP.TIMEBASE = 3;
     //set opamp to unity gain and input to unity gain to be the DAC
-    //OPAMP.OP0INMUX |= OPAMP_MUXNEG_OUT_gc | OPAMP_MUXPOS_DAC_gc;
+    OPAMP.OP0INMUX = OPAMP_MUXNEG_OUT_gc | OPAMP_MUXPOS_DAC_gc ;
     //set opamp in always on and sets output driver to normal
-    //OPAMP.OP0CTRLA |= OPAMP_OUTMODE_NORMAL_gc;
+    OPAMP.OP0CTRLA = OPAMP_OUTMODE_NORMAL_gc | OPAMP_ALWAYSON_bm;
     //enables OPAMP
-    //OPAMP.CTRLA |= 1;
+    OPAMP.CTRLA = 0x1;
+    
+    //while(!(OPAMP.OP0STATUS & 1));
     //do we need settle timer? who knows documentation
     //just says depends on multitude of factors. can be added
     //later if device doesn't have proper functionality
@@ -25,12 +27,12 @@ void intialize() {
     
     //dac0 intialization
     //sets up VREF to VDD and turns on AlwaysOn
-    VREF.DAC0REF |=  0x05; 
+    
+    DAC0.CTRLA = DAC_OUTEN_bm | DAC_ENABLE_bm;
     //sets intial value
-    DAC0.DATAH = 50;
+    DAC0.DATAH = 1;
     //enables dac
-    PORTD.PIN6CTRL |= 0x4;
-    DAC0.CTRLA |= 0xC1; 
+    DAC0.CTRLA |= 0x81; 
    
     
     
@@ -42,13 +44,6 @@ void intialize() {
     TCA0.SINGLE.INTCTRL |= 0x1;
     //sets clock divider to 64 enables clock
     TCA0.SINGLE.CTRLA |= TCA_SINGLE_RUNSTDBY_bm | TCA_SINGLE_ENABLE_bm;
-
-    
-    
-    PORTC.DIRSET |= 0x2;
-    PORTC.DIR |= 0x2;
-    PORTC.DIRSET |= 0x2;
-
     
     //global interrupt enable
     CPU_SREG |= 0x80;  
