@@ -10,25 +10,23 @@
 #include "init.h"
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "sound_player.h"
 /*
  * 
  */
-char temp = 0;
 
+
+
+char temp = 0;
+int data = 0;
 
 int main(int argc, char** argv) {
     intialize();
-    
-
+    intialize_player();
+    play_sound(0,0);
     while(1);
     
     
     return (EXIT_SUCCESS);
 }
 
-ISR(TCA0_OVF_vect){
-    
-    DAC0.DATAH = temp++;
-    TCA0.SINGLE.INTFLAGS |= 1;
-    return;
-}

@@ -5,8 +5,13 @@
  * Created on September 17, 2020, 4:32 PM
  */
 #include <avr/io.h>
+#include "sound_player.h"
 
 void intialize() {
+    //configure chip select port a7
+    PORTA.DIRSET = 1<<7;
+    PORTA.OUTSET = 1<<7;
+    CPU_SREG &= ~0x80;
     //opamp intialization
     //setting timebase
     //1u/(1/4Mhz) - 1 = 
@@ -17,6 +22,9 @@ void intialize() {
     OPAMP.OP0CTRLA = OPAMP_OUTMODE_NORMAL_gc | OPAMP_ALWAYSON_bm;
     //enables OPAMP
     OPAMP.CTRLA = 0x1;
+    
+    
+    
     
     //while(!(OPAMP.OP0STATUS & 1));
     //do we need settle timer? who knows documentation
@@ -45,11 +53,25 @@ void intialize() {
     //sets clock divider to 64 enables clock
     TCA0.SINGLE.CTRLA |= TCA_SINGLE_RUNSTDBY_bm | TCA_SINGLE_ENABLE_bm;
     
-    //global interrupt enable
-    CPU_SREG |= 0x80;  
+    //configure output pins for spi
+    //PA4 MOSI
+    //PA5 MISO
+    //PA6 SCK
+    //SPI overrides dirset for input pins but not output pins.
+    PORTA.DIRSET = 1<<4 | 1<<6;
+    //set to master mode and set prescale to 4 so 1Mhz baud rate on the spi
+    SPI0.CTRLA |= 1<<5 | 0<<1;
+    //set into buffer mode and disable slave select
+    SPI0.CTRLB |= 1<<2 | 1<<7;
+    
+    SPI0.INTCTRL |= 1<<7 | 1<<5 | 1;
+    
+    SPI0.CTRLA |= 1;
     
     
     
+
+       
     
 }
 
