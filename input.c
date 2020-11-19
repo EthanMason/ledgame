@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "input.h"
 #include <avr/io.h>
+#include <avr/cpufunc.h> 
 
 int input(int a[60], int pos){
 	int c;
@@ -10,12 +11,18 @@ int input(int a[60], int pos){
             if((PORTE.IN >> i)&1){
                 c = i + 1;
                 button_pressed = 1;
+                for(volatile unsigned int q = 0; q < 0xFF; q++){
+                            _NOP ();
+                }
                 break;            
             }
         }
         if((PORTB.IN >> 5)&1){
             c = 5;
             button_pressed = 1;
+            for(volatile unsigned int q = 0; q < 0xFF; q++){
+                            _NOP ();
+            }
         }
     }while(!button_pressed);
             

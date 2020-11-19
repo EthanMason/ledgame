@@ -46,8 +46,7 @@ int main(int argc, char** argv) {
                 position=maze[((position-1)*4)+c-1];
             }
         }
-        PORTC.OUTSET = PORTE.IN << 4;
-        PORTC.OUTCLR = ~(PORTE.IN<<4);
+        play_sound(0,0);
     
     }
     //
