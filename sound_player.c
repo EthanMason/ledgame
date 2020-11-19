@@ -29,7 +29,7 @@ void play_sound(long long address_input, long long size){
         while(!(SPI0.INTFLAGS & (1<<5)));
         SPI0.DATA = (unsigned char) (currmemloc>>16);
         while(!(SPI0.INTFLAGS & (1<<5)));
-        SPI0.DATA = (unsigned char) (currmemloc>8);
+        SPI0.DATA = (unsigned char) (currmemloc>>8);
         while(!(SPI0.INTFLAGS & (1<<5)));
         SPI0.DATA = (unsigned char) currmemloc;
         position_buff = 0;
@@ -55,7 +55,7 @@ ISR(TCA0_OVF_vect){
         while(!(SPI0.INTFLAGS & (1<<5)));
         SPI0.DATA = (unsigned char) (currmemloc>>16);
         while(!(SPI0.INTFLAGS & (1<<5)));
-        SPI0.DATA = (unsigned char) (currmemloc>8);
+        SPI0.DATA = (unsigned char) (currmemloc>>8);
         while(!(SPI0.INTFLAGS & (1<<5)));
         SPI0.DATA = (unsigned char) currmemloc;
         CPU_SREG |= 0x80;
