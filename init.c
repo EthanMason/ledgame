@@ -24,6 +24,14 @@ void intialize() {
     OPAMP.CTRLA = 0x1;
     
     
+    PORTC.DIRSET = 0xF0;
+    PORTE.PIN0CTRL = 1<<3 | 1<<7;
+    PORTE.PIN1CTRL = 1<<3 | 1<<7;
+    PORTE.PIN2CTRL = 1<<3 | 1<<7;
+    PORTE.PIN3CTRL = 1<<3 | 1<<7;
+    PORTB.PIN5CTRL = 1<<3 | 1<<7;
+    
+    
     
     
     //while(!(OPAMP.OP0STATUS & 1));
