@@ -61,6 +61,9 @@ void intialize() {
     //sets clock divider to 64 enables clock
     TCA0.SINGLE.CTRLA |= TCA_SINGLE_RUNSTDBY_bm | TCA_SINGLE_ENABLE_bm;
     
+    TCA1.SINGLE.PER = 0xFF;
+    TCA1.SINGLE.CTRLA |= TCA_SINGLE_RUNSTDBY_bm | TCA_SINGLE_ENABLE_bm;
+    
     //configure output pins for spi
     //PA4 MOSI
     //PA5 MISO
@@ -76,7 +79,9 @@ void intialize() {
     
     SPI0.CTRLA |= 1;
     
-    
+    for(int i =0; i < 4; i++){
+        PORTC.OUTSET = 1<<(4+i);
+    }
     
 
        
