@@ -3,7 +3,7 @@
 #include "display.h"
 #include <avr/io.h>
 #include <avr/cpufunc.h> 
-
+#include "sound_player.h"
 
 int display_maze(int a[60], int step){
 	int display= (step-1)*4;
@@ -41,12 +41,17 @@ int display_solution(int a[60], int step, int sol[15]){
 				if(sol[a[temp+i]-1] == solve-1-n){
 					PORTC.OUTCLR = 0xF0;
                     PORTC.OUTSET = 1<<(4+i);
-                    
-                    for(volatile unsigned int b = 0; b < 0xFF; b++){
-                        for(volatile unsigned int q = 0; q < 0xFF; q++){
-                            _NOP ();
-                        }
+                    switch(i){
+                        case 0:
+                            play_sound(button_1);
+                        case 1:
+                            play_sound(button_2);
+                        case 2:
+                            play_sound(button_3);
+                        case 3:
+                            play_sound(button_4);
                     }
+                    while(!done_playing());
                     
 					step=a[temp+i];
 				}
@@ -54,11 +59,17 @@ int display_solution(int a[60], int step, int sol[15]){
                     PORTC.OUTCLR = 0xF0;
 					PORTC.OUTSET = 1<<(4+i);
                     
-                    for(volatile unsigned int b = 0; b < 0xFF; b++){
-                        for(volatile unsigned int q = 0; q < 0xFF; q++){
-                            _NOP();
-                        }
+                    switch(i){
+                        case 0:
+                            play_sound(button_1);
+                        case 1:
+                            play_sound(button_2);
+                        case 2:
+                            play_sound(button_3);
+                        case 3:
+                            play_sound(button_4);
                     }
+                    while(!done_playing());
                     
                     
 				}
