@@ -14,6 +14,7 @@
 #include "display.h"
 #include "input.h"
 #include "premade.h"
+#include <avr/cpufunc.h> 
 /*
  * 
  */
@@ -26,14 +27,32 @@ int data = 0;
 int main(int argc, char** argv) {
     intialize();
     intialize_player();
-    play_sound(0,0);
     while(1){
         int position = 15;
         int maze[60] = {[0 ... 59] = -1 };
         int solution[15];
         int c;
         
-        premade(maze, solution);
+       
+        _Bool button_pressed = 0; 
+        do{
+            for(int i = 0; i < 2; i++){
+                    if((PORTE.IN >> i)&1){
+                    int c = i + 1;
+                    button_pressed = 1;
+                    for(volatile unsigned int q = 0; q < 0xFF; q++){
+                                _NOP ();
+                    }
+                    if(c = 1){
+                        premade(maze, solution);
+                    }
+                    else{
+                        random_gen(maze, solution);
+                    }
+                    break;            
+                }
+            }
+        }while(!button_pressed);
         
         while(position!=0){
             display_maze(maze, position);
@@ -46,7 +65,6 @@ int main(int argc, char** argv) {
                 position=maze[((position-1)*4)+c-1];
             }
         }
-        play_sound(0,0);
     
     }
     //
