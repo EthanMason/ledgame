@@ -12,7 +12,7 @@ static long long end_loc = 0;
 static enum sounds curr_sound;
 static _Bool done = 1;
 //value to see if sound will be repeated
-_Bool repeated = 0;
+static _Bool repeated = 0;
 //data buffer to hold samples before being played
 static char data_buffer[BUFFER_SIZE];
 static int position_buff = 0;
